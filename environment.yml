@@ -1,0 +1,9 @@
+name: alchemy-pyscf
+dependencies:
+  - python>=3.6
+  - pyscf::pyscf
+  - openbabel::openbabel
+  - pip:
+    - geometric
+    - pybel
+    - pyberny
