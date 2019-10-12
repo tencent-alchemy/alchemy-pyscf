@@ -21,7 +21,7 @@ Non-relativistic RHF analytical Hessian with density-fitting approximation
 
 Ref:
 [1] Efficient implementation of the analytic second derivatives of
-    Hartree–Fock and hybrid DFT energies: a detailed analysis of different
+    Hartree-Fock and hybrid DFT energies: a detailed analysis of different
     approximations.  Dmytro Bykov, Taras Petrenko, Robert Izsak, Simone
     Kossmann, Ute Becker, Edward Valeev, Frank Neese. Mol. Phys. 113, 1961 (2015)
 '''

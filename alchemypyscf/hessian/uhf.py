@@ -29,8 +29,8 @@ from pyscf.lib import logger
 from pyscf import ao2mo
 from pyscf.hessian import rhf as rhf_hess
 from pyscf.hessian import uhf as uhf_hess
-import sys
-sys.path.insert(0, '/Users/qssun/Documents/material.cloud/program/geometry_workflow')
+import os, sys
+sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..')))
 from hessian.rhf import _int3c_wrapper, _load_dim0
 
 

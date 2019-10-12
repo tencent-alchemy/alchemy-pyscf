@@ -70,11 +70,11 @@ def get_veff(ks_grad, mol=None, dm=None):
             vk_aux = vk.aux * hyb
         vk *= hyb
         if abs(omega) > 1e-10:  # For range separated Coulomb operator
-            with mol.with_range_coulomb(omega):
-                vk_lr = ks_grad.get_k(mol, dm)
-                vk += vk_lr * (alpha - hyb)
-                if ks_grad.auxbasis_response:
-                    vk_aux += vk_lr.aux * (alpha - hyb)
+            raise NotImplementedError
+            vk_lr = ks_grad.get_k(mol, dm)
+            vk += vk_lr * (alpha - hyb)
+            if ks_grad.auxbasis_response:
+                vk_aux += vk_lr.aux * (alpha - hyb)
         vxc += vj[0] + vj[1] - vk
         if ks_grad.auxbasis_response:
             e1_aux = vj.aux - vk_aux

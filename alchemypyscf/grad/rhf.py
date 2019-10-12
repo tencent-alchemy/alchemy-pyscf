@@ -22,7 +22,7 @@ from pyscf import gto
 from pyscf import lib
 from pyscf import scf
 from pyscf import df
-from pyscf.ao2mo.outcore import balance_partition, _load_from_h5g
+from pyscf.ao2mo.outcore import balance_partition
 from pyscf.gto.moleintor import getints, make_cintopt
 from pyscf.lib import logger
 from pyscf.grad import rhf as rhf_grad
@@ -136,6 +136,7 @@ def get_jk(mf_grad, mol=None, dm=None, hermi=0, with_j=True, with_k=True):
     max_memory = mf_grad.max_memory - lib.current_memory()[0]
     blksize = max_memory * .5e6/8 / (naux*nao)
     mol_ao_ranges = balance_partition(ao_loc, blksize)
+    nsteps = len(mol_ao_ranges)
     for istep, (shl0, shl1, nd) in enumerate(mol_ao_ranges):
         int3c = get_int3c_s1((0, nbas, shl0, shl1, 0, nauxbas))
         p0, p1 = ao_loc[shl0], ao_loc[shl1]
@@ -151,9 +152,13 @@ def get_jk(mf_grad, mol=None, dm=None, hermi=0, with_j=True, with_k=True):
 
     def load(set_id, p0, p1):
         nocc = orbo[set_id].shape[1]
-        buf = numpy.empty((p1-p0,nao,nocc))
-        _load_from_h5g(f_rhok[str(set_id)], p0, p1, buf)
-        return numpy.asarray(buf.transpose(0,2,1), order='C')
+        buf = numpy.empty((p1-p0,nocc,nao))
+        col1 = 0
+        for istep in range(nsteps):
+            dat = f_rhok['%s/%s'%(set_id,istep)][p0:p1]
+            col0, col1 = col1, col1 + dat.shape[1]
+            buf[:p1-p0,:,col0:col1] = dat.transpose(0,2,1)
+        return buf
 
     vj = numpy.zeros((nset,3,nao,nao))
     vk = numpy.zeros((nset,3,nao,nao))
