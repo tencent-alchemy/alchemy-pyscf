@@ -4,7 +4,8 @@ import os, sys
 #sys.path.insert(0, os.path.abspath(__file__ + '/..'))
 
 import numpy as np
-from pyscf import gto, dft, nist
+from pyscf import gto, dft
+from pyscf.data import nist
 # Activate property driver
 from pyscf import __all__
 
