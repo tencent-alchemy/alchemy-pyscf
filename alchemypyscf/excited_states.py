@@ -8,7 +8,6 @@ from pyscf import gto, dft, nist
 # Activate property driver
 from pyscf import __all__
 
-@public
 def tddft(xyz: str, xc: str = 'camb3lyp', basis: str = '6-31+G*', nstates: int = 5):
     '''
     Compute the TDDFT energy of excited states and the transition dipole of
